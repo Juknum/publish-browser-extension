@@ -4,6 +4,10 @@
 
 [compare changes](https://github.com/aklinker1/publish-browser-extension/compare/v4.0.5...v5.0.0)
 
+**v5 includes breaking changes to the JS APIs only** - there were no breaking changes to the CLI.
+
+It also adds support for the new CWS v2 API - run `publish-extension init` or `wxt submit init` to migrate to the new API.
+
 ### 🚀 Enhancements
 
 - Add Opera support ([#58](https://github.com/aklinker1/publish-browser-extension/pull/58))
@@ -48,6 +52,7 @@
 - Aaron ([@aklinker1](https://github.com/aklinker1))
 - Toshs ([@toshs](https://github.com/toshs))
 - Julien <julienconstant190@gmail.com>
+- MengXi ([@mengxi-ream](https://github.com/mengxi-ream))
 
 ## v4.0.5
 
