@@ -1,5 +1,54 @@
 # Changelog
 
+## v5.0.0
+
+[compare changes](https://github.com/aklinker1/publish-browser-extension/compare/v4.0.5...v5.0.0)
+
+### 🚀 Enhancements
+
+- Add Opera support ([#58](https://github.com/aklinker1/publish-browser-extension/pull/58))
+- Compatibility support for Firefox Android ([#62](https://github.com/aklinker1/publish-browser-extension/pull/62))
+- Add support for CWS API v2 ([#74](https://github.com/aklinker1/publish-browser-extension/pull/74))
+
+### 🩹 Fixes
+
+- ⚠️ Make `FirefoxApi`, `EdgeApi`, `OperaApi` internal ([38902e8](https://github.com/aklinker1/publish-browser-extension/commit/38902e8))
+- ⚠️ Remove deprecated options for edge v1 (`EDGE_CLIENT_SECRET`, `EDGE_ACCESS_TOKEN_URL`) ([bfd792d](https://github.com/aklinker1/publish-browser-extension/commit/bfd792d))
+
+### 💅 Refactors
+
+- ⚠️ Chrome API code-gen ([#71](https://github.com/aklinker1/publish-browser-extension/pull/71))
+- Move files around to match my current organization patterns ([3ffaa8e](https://github.com/aklinker1/publish-browser-extension/commit/3ffaa8e))
+- Move more files around ([d491af0](https://github.com/aklinker1/publish-browser-extension/commit/d491af0))
+- Simplify edge API setup ([270ba2a](https://github.com/aklinker1/publish-browser-extension/commit/270ba2a))
+- Simplify internal firefox APIs ([#73](https://github.com/aklinker1/publish-browser-extension/pull/73))
+- Add API versions to exports, deprecate non-versioned APIs ([78fe9d1](https://github.com/aklinker1/publish-browser-extension/commit/78fe9d1))
+
+### 🏡 Chore
+
+- Fix checks ([de490c6](https://github.com/aklinker1/publish-browser-extension/commit/de490c6))
+- **cws:** Sort generate API schemas and methods for consistent ordering in generated code ([9f0a0fa](https://github.com/aklinker1/publish-browser-extension/commit/9f0a0fa))
+- Drop `jsonwebtoken` and implement `sign` function locally ([#75](https://github.com/aklinker1/publish-browser-extension/pull/75))
+- Break config object builders into functions ([7917ee3](https://github.com/aklinker1/publish-browser-extension/commit/7917ee3))
+- Remove `!` by creating an intermediate variable ([96ea71a](https://github.com/aklinker1/publish-browser-extension/commit/96ea71a))
+
+### 🤖 CI
+
+- Exclude opera from E2E tests ([3001a3e](https://github.com/aklinker1/publish-browser-extension/commit/3001a3e))
+- Re-enable firefox and edge ([c77df8c](https://github.com/aklinker1/publish-browser-extension/commit/c77df8c))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️ Make `FirefoxApi`, `EdgeApi`, `OperaApi` internal ([38902e8](https://github.com/aklinker1/publish-browser-extension/commit/38902e8))
+- ⚠️ Remove deprecated options for edge v1 (`EDGE_CLIENT_SECRET`, `EDGE_ACCESS_TOKEN_URL`) ([bfd792d](https://github.com/aklinker1/publish-browser-extension/commit/bfd792d))
+- ⚠️ Chrome API code-gen ([#71](https://github.com/aklinker1/publish-browser-extension/pull/71))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+- Toshs ([@toshs](https://github.com/toshs))
+- Julien <julienconstant190@gmail.com>
+
 ## v4.0.5
 
 [compare changes](https://github.com/aklinker1/publish-browser-extension/compare/v4.0.4...v4.0.5)
