@@ -204,6 +204,7 @@ describe('resolveConfig', () => {
       firefox: {
         ...config.firefox,
         channel: 'listed' as const,
+        skipSubmitReview: false,
       },
       edge: {
         ...config.edge,
