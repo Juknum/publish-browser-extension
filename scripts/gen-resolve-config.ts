@@ -21,25 +21,20 @@ const allPathsPadding = configMetas.reduce(
   0,
 );
 
-const renderValue = (
-  meta: { path: string; default?: any },
-  padding = allPathsPadding,
-) =>
-  `(config as any)?.${meta.path.replaceAll('.', '?.').padEnd(padding + 1)} ?? process.env.${snakeCase(
+const renderValue = (meta: { path: string }, padding = allPathsPadding) => {
+  return `(config as any)?.${meta.path.replaceAll('.', '?.').padEnd(padding + 1)} ?? process.env.${snakeCase(
     meta.path,
-  )
-    .toUpperCase()
-    .padEnd(
-      meta.default == null ? 0 : padding,
-    )}${meta.default == null ? `` : ` ?? ${JSON.stringify(meta.default)}`}`;
+  ).toUpperCase()}`;
+};
 
 const lines: string[] = [
   `// prettier-ignore`,
   `/**`,
-  ` * Given inline config, read environment variables and apply defaults. Throws an`,
-  ` * error if any config is missing.`,
+  ` * Given inline config, read environment variables and apply defaults.`,
+  ` * The return value is a deep partial of the ResolvedConfig type - call`,
+  ` * \`validateConfig\` to make sure all required options are passed`,
   ` */`,
-  `export function resolveConfig(config?: InlineConfig): ResolvedConfig {`,
+  `export function resolveConfig(config?: InlineConfig): PartialResolvedConfig {`,
   `  const raw: Record<string, any> = {}`,
   ``,
   '  // Init store objects',
@@ -63,7 +58,7 @@ const lines: string[] = [
     return `  ${ifStatement}raw.${meta.path.padEnd(allPathsPadding)} = ${renderValue(meta)}`;
   }),
   ``,
-  `  return validateConfig(raw);`,
+  `  return validateConfigWith(raw, PartialResolvedConfig);`,
   `}`,
 ];
 

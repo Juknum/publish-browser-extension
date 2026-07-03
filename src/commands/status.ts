@@ -1,5 +1,5 @@
 import consola from 'consola';
-import { resolveConfig, type InlineConfig } from '../config';
+import { resolveConfig, validateConfig, type InlineConfig } from '../config';
 import { ChromeWebStoreV2 } from '../stores/chrome-web-store-v2';
 
 export async function status(config: InlineConfig): Promise<void> {
@@ -9,7 +9,7 @@ export async function status(config: InlineConfig): Promise<void> {
   if (config.dryRun)
     throw Error('Dry run is not supported when getting item status');
 
-  const { chrome: resolved } = resolveConfig(config);
+  const { chrome: resolved } = validateConfig(resolveConfig(config));
   if (!resolved)
     throw Error('Chrome options are required when getting item status');
   if (resolved.apiVersion !== 'v2')

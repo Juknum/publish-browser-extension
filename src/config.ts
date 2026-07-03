@@ -1,5 +1,9 @@
-import { validate } from 'superstruct';
-import { type InlineConfig, ResolvedConfig } from './utils/config-schema';
+import { Struct, StructError, validate } from 'superstruct';
+import {
+  PartialResolvedConfig,
+  type InlineConfig,
+  ResolvedConfig,
+} from './utils/config-schema';
 
 export type {
   AllChromeOptions,
@@ -18,10 +22,11 @@ export type {
 /// gen-start:config-resolver
 // prettier-ignore
 /**
- * Given inline config, read environment variables and apply defaults. Throws an
- * error if any config is missing.
+ * Given inline config, read environment variables and apply defaults.
+ * The return value is a deep partial of the ResolvedConfig type - call
+ * `validateConfig` to make sure all required options are passed
  */
-export function resolveConfig(config?: InlineConfig): ResolvedConfig {
+export function resolveConfig(config?: InlineConfig): PartialResolvedConfig {
   const raw: Record<string, any> = {}
 
   // Init store objects
@@ -70,25 +75,26 @@ export function resolveConfig(config?: InlineConfig): ResolvedConfig {
   if (raw.opera)   raw.opera.skipSubmitReview           = (config as any)?.opera?.skipSubmitReview           ?? process.env.OPERA_SKIP_SUBMIT_REVIEW
   if (raw.opera)   raw.opera.zip                        = (config as any)?.opera?.zip                        ?? process.env.OPERA_ZIP
 
-  return validateConfig(raw);
+  return validateConfigWith(raw, PartialResolvedConfig);
 }
 /// gen-end:config-resolver
 
 /**
  * Validate if an object matches `ResolvedConfig`, throwing an error if it is
  * invalid.
- *
- * @internal Generally, you should use `resolveConfig`, which merges env
- *           variables, applies defaults, and calls this function automatically.
  */
 export function validateConfig(config: any): ResolvedConfig {
-  const res = validate(config, ResolvedConfig, { coerce: true, mask: true });
-  if (res[1]) return res[1];
+  return validateConfigWith(config, ResolvedConfig);
+}
+
+function validateConfigWith<T>(config: any, schema: Struct<T>): T {
+  const res = validate(config, schema, { coerce: true, mask: true });
+  if (res[1] != null) return res[1];
 
   throw Error(
     [
       'Invalid config:',
-      ...res[0]
+      ...(res[0] as StructError)
         .failures()
         .map(err => `  - \`${err.path.join('.')}\`: ${err.message}`),
     ].join('\n'),

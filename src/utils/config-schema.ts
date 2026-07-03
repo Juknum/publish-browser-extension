@@ -17,6 +17,7 @@ import {
   array,
   trimmed,
   defaulted,
+  partial,
 } from 'superstruct';
 import type { DeepPartial } from './types';
 
@@ -62,6 +63,19 @@ const coercedNumber = coerce(number(), union([string(), number()]), v => {
 
 const commaArray = <T>(struct: Struct<T>) =>
   coerce(array(struct), string(), v => v.split(','));
+
+const deepPartial = <T extends Record<string, any>>(
+  struct: Struct<T>,
+): Struct<DeepPartial<T>> => {
+  if (struct.type !== 'object') return struct as any;
+
+  // @ts-expect-error: Weird schema type error
+  const partialSchema: any = { ...struct.schema };
+  for (const key in partialSchema) {
+    partialSchema[key] = deepPartial(partialSchema[key]);
+  }
+  return partial(partialSchema) as any;
+};
 
 const ChromeWebStoreSharedOptionsShape = {
   zip: meta(nonempty(string()), {
@@ -290,14 +304,18 @@ export const ResolvedConfig = object({
   opera: optional(OperaAddonsStoreOptions),
 });
 
+export type ResolvedConfig = Infer<typeof ResolvedConfig>;
+
+export const PartialResolvedConfig = deepPartial(ResolvedConfig);
+
+export type PartialResolvedConfig = Infer<typeof PartialResolvedConfig>;
+
 export {
   /** @deprecated Use FirefoxAddonStoreV5Options instead. */
   FirefoxAddonStoreV5Options as FirefoxAddonStoreOptions,
   /** @deprecated Use EdgeAddonStoreV1_1Options instead. */
   EdgeAddonStoreV1_1Options as EdgeAddonStoreOptions,
 };
-
-export type ResolvedConfig = Infer<typeof ResolvedConfig>;
 
 /** @deprecated Renamed to `ResolvedConfig` */
 export const InternalConfig = ResolvedConfig;
