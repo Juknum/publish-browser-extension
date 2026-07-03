@@ -44,6 +44,7 @@ cli.help();
   cli.option('--firefox-extension-id [firefoxExtensionId]', "The ID of the extension to be submitted")
   cli.option('--firefox-jwt-issuer [firefoxJwtIssuer]', "Issuer used for authorizing requests to Addon Store APIs")
   cli.option('--firefox-jwt-secret [firefoxJwtSecret]', "Secret used for authorizing requests to Addon Store APIs")
+  cli.option('--firefox-skip-submit-review [firefoxSkipSubmitReview]', "Just upload the extension zip, don't submit it for review or publish it (default: false)")
   cli.option('--firefox-sources-zip [firefoxSourcesZip]', "Path to sources zip to upload")
   cli.option('--firefox-zip [firefoxZip]', "Path to extension zip to upload")
   cli.option('--opera-package-id [operaPackageId]', "Package ID listed in the package developer URL: https://addons.opera.com/developer/package/<packageId>")
@@ -92,6 +93,7 @@ function configFromFlags(flags: any): InlineConfig {
   config.firefox.extensionId = flags.firefoxExtensionId
   config.firefox.jwtIssuer = flags.firefoxJwtIssuer
   config.firefox.jwtSecret = flags.firefoxJwtSecret
+  config.firefox.skipSubmitReview = flags.firefoxSkipSubmitReview
   config.firefox.sourcesZip = flags.firefoxSourcesZip
   config.firefox.zip = flags.firefoxZip
   config.opera.packageId = flags.operaPackageId

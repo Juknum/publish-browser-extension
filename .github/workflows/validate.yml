@@ -36,11 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ./.github/actions/setup
-      - run: |
-          bun dev:chrome
-          # bun dev:firefox
-          bun dev:edge
-          bun dev:opera
+      - run: bun dev:all
         env:
           # Chrome
           CHROME_EXTENSION_ID: ${{ secrets.TEST_CHROME_EXTENSION_ID }}
@@ -55,6 +51,7 @@ jobs:
           FIREFOX_JWT_SECRET: ${{ secrets.TEST_FIREFOX_JWT_SECRET }}
           FIREFOX_CHANNEL: unlisted
           FIREFOX_COMPATIBILITY: firefox,android
+          FIREFOX_SKIP_SUBMIT_REVIEW: 'true'
           # Edge
           EDGE_PRODUCT_ID: ${{ secrets.TEST_EDGE_PRODUCT_ID }}
           EDGE_CLIENT_ID: ${{ secrets.TEST_EDGE_CLIENT_ID }}

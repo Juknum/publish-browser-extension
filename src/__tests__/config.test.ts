@@ -42,6 +42,7 @@ describe('resolveConfig', () => {
         channel: 'unlisted',
         zip: 'zip',
         sourcesZip: 'sourcesZip',
+        skipSubmitReview: true,
       },
       edge: {
         productId: 'productId',
@@ -96,6 +97,8 @@ describe('resolveConfig', () => {
       'firefox',
     ];
     process.env.FIREFOX_COMPATIBILITY = firefoxCompatibility.join(',');
+    const firefoxSkipSubmitReview = true;
+    process.env.FIREFOX_SKIP_SUBMIT_REVIEW = String(firefoxSkipSubmitReview);
 
     process.env.EDGE_ZIP = 'EDGE_ZIP';
     process.env.EDGE_PRODUCT_ID = 'EDGE_PRODUCT_ID';
@@ -136,6 +139,7 @@ describe('resolveConfig', () => {
         jwtIssuer: process.env.FIREFOX_JWT_ISSUER,
         jwtSecret: process.env.FIREFOX_JWT_SECRET,
         compatibility: firefoxCompatibility,
+        skipSubmitReview: firefoxSkipSubmitReview,
       },
       edge: {
         zip: process.env.EDGE_ZIP,
