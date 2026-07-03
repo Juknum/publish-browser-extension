@@ -10,7 +10,6 @@ import {
   type InlineConfig,
 } from '../config';
 import { copyFile, writeFile, readFile } from 'node:fs/promises';
-import { ofetch } from 'ofetch';
 import type { CustomEnv } from '../utils/env-utils';
 
 type Entry = [key: keyof CustomEnv, value: string | number | boolean];
@@ -191,13 +190,10 @@ async function initChromeV1_1(
     data.set('grant_type', 'authorization_code');
     data.set('redirect_uri', 'urn:ietf:wg:oauth:2.0:oob');
     const tokenUrl = `https://accounts.google.com/o/oauth2/token`;
-    const res = await ofetch<{ refresh_token: string }>(tokenUrl, {
-      method: 'POST',
-      body: data,
-    });
-    const refreshToken = res.refresh_token;
-    consola.info(`Refresh token: \`${refreshToken}\``);
-    entries.push(['CHROME_REFRESH_TOKEN', refreshToken]);
+    const res = await fetch(tokenUrl, { method: 'POST', body: data });
+    const json = (await res.json()) as { refresh_token: string };
+    consola.info(`Refresh token: \`${json.refresh_token}\``);
+    entries.push(['CHROME_REFRESH_TOKEN', json.refresh_token]);
   }
 
   const publishTarget = await prompt<string>(
