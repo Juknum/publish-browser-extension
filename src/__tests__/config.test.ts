@@ -1,10 +1,11 @@
 import { describe, it, expect, beforeEach } from 'bun:test';
 import {
-  InlineConfig,
-  InternalConfig,
+  type InlineConfig,
+  type ResolvedConfig,
   resolveConfig,
   validateConfig,
-} from './config';
+} from '../config';
+import type { FirefoxAddonStoreV5Options } from '../utils/config-schema';
 
 const RESET_ENV_NAMES = /(^CHROME_|^FIREFOX_|^EDGE_|^OPERA_|^DRY_RUN$)/;
 
@@ -55,7 +56,7 @@ describe('resolveConfig', () => {
         sessionId: 'sessionId',
         skipSubmitReview: true,
       },
-    } satisfies InternalConfig;
+    } satisfies ResolvedConfig;
 
     const actual = resolveConfig(config);
 
@@ -90,6 +91,11 @@ describe('resolveConfig', () => {
     process.env.FIREFOX_JWT_SECRET = 'FIREFOX_JWT_SECRET';
     const firefoxChannel = 'unlisted';
     process.env.FIREFOX_CHANNEL = firefoxChannel;
+    const firefoxCompatibility: FirefoxAddonStoreV5Options['compatibility'] = [
+      'android',
+      'firefox',
+    ];
+    process.env.FIREFOX_COMPATIBILITY = firefoxCompatibility.join(',');
 
     process.env.EDGE_ZIP = 'EDGE_ZIP';
     process.env.EDGE_PRODUCT_ID = 'EDGE_PRODUCT_ID';
@@ -105,7 +111,7 @@ describe('resolveConfig', () => {
     const operaSkipSubmitReview = true;
     process.env.OPERA_SKIP_SUBMIT_REVIEW = String(operaSkipSubmitReview);
 
-    const expected: InternalConfig = {
+    const expected: ResolvedConfig = {
       dryRun,
       chrome: {
         apiVersion: 'v2',
@@ -129,6 +135,7 @@ describe('resolveConfig', () => {
         extensionId: process.env.FIREFOX_EXTENSION_ID,
         jwtIssuer: process.env.FIREFOX_JWT_ISSUER,
         jwtSecret: process.env.FIREFOX_JWT_SECRET,
+        compatibility: firefoxCompatibility,
       },
       edge: {
         zip: process.env.EDGE_ZIP,
@@ -202,7 +209,7 @@ describe('resolveConfig', () => {
         ...config.opera,
         skipSubmitReview: false,
       },
-    };
+    } as ResolvedConfig;
 
     const actual = resolveConfig(config);
 
@@ -225,7 +232,7 @@ describe('resolveConfig', () => {
         packageId: 1,
       },
     };
-    const expected: InternalConfig = {
+    const expected: ResolvedConfig = {
       dryRun: false,
       chrome: undefined,
       edge: undefined,
@@ -245,10 +252,11 @@ describe('validateConfig', () => {
       dryRun: true,
       chrome: {
         apiVersion: 'v2',
+        extensionId: ' ',
       },
     };
     expect(() => validateConfig(config)).toThrowError(
-      'Missing required config: CHROME_ZIP, CHROME_EXTENSION_ID, CHROME_PUBLISHER_ID, CHROME_SERVICE_ACCOUNT_CLIENT_EMAIL, CHROME_SERVICE_ACCOUNT_PRIVATE_KEY',
+      'Invalid config:\n  - `chrome.zip`: Expected a string, but received: undefined\n  - `chrome.extensionId`: Expected a nonempty string but received an empty one\n  - `chrome.publisherId`: Expected a string, but received: undefined\n  - `chrome.serviceAccountClientEmail`: Expected a string, but received: undefined\n  - `chrome.serviceAccountPrivateKey`: Expected a string, but received: undefined',
     );
   });
 });
