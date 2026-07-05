@@ -2,13 +2,21 @@ import { cac } from 'cac';
 import { version } from '../package.json';
 import { submit } from './commands/submit';
 import { init } from './commands/init';
-import { config } from 'dotenv';
+import { readFileSync } from 'node:fs';
+import { parseEnv } from 'node:util';
 import type { InlineConfig } from './config';
 import { status } from './commands/status';
 import { setDeployPercentage } from './commands/set-deploy-percentage';
 import { logger } from './utils/logger';
 
-config({ path: '.env.submit', quiet: true });
+try {
+  const env = parseEnv(readFileSync('.env.submit', 'utf8'));
+  for (const [key, value] of Object.entries(env)) {
+    process.env[key] ??= value;
+  }
+} catch {
+  // Ignore missing or unreadable .env.submit file
+}
 
 const cli = cac('publish-extension');
 cli.version(version);
