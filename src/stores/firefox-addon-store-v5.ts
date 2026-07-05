@@ -135,8 +135,3 @@ export class FirefoxAddonStoreV5 implements Store {
     ].join(', ');
   }
 }
-
-export {
-  /** @deprecated Use FirefoxAddonStoreV5 instead. */
-  FirefoxAddonStoreV5 as FirefoxAddonStore,
-};

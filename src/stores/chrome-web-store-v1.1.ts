@@ -123,8 +123,3 @@ export class ChromeWebStoreUploadStateError extends Error {
     this.name = 'ChromeWebStoreUploadStateError';
   }
 }
-
-export {
-  /** @deprecated Use ChromeWebStoreV1_1 instead. */
-  ChromeWebStoreV1_1 as ChromeWebStore,
-};

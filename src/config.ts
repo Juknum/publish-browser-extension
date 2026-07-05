@@ -10,12 +10,9 @@ export type {
   AllChromeOptions,
   ChromeWebStoreV1_1Options,
   ChromeWebStoreV2Options,
-  EdgeAddonStoreOptions,
   EdgeAddonStoreV1_1Options,
-  FirefoxAddonStoreOptions,
   FirefoxAddonStoreV5Options,
   InlineConfig,
-  InternalConfig,
   OperaAddonsStoreOptions,
   ResolvedConfig,
 } from './utils/config-schema';

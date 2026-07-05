@@ -315,16 +315,4 @@ export const PartialResolvedConfig = deepPartial(ResolvedConfig);
 
 export type PartialResolvedConfig = Infer<typeof PartialResolvedConfig>;
 
-export {
-  /** @deprecated Use FirefoxAddonStoreV5Options instead. */
-  FirefoxAddonStoreV5Options as FirefoxAddonStoreOptions,
-  /** @deprecated Use EdgeAddonStoreV1_1Options instead. */
-  EdgeAddonStoreV1_1Options as EdgeAddonStoreOptions,
-};
-
-/** @deprecated Renamed to `ResolvedConfig` */
-export const InternalConfig = ResolvedConfig;
-/** @deprecated Renamed to `ResolvedConfig` */
-export type InternalConfig = ResolvedConfig;
-
 export type InlineConfig = DeepPartial<ResolvedConfig>;
