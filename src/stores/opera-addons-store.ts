@@ -1,7 +1,7 @@
 import type { Store } from './store';
 import { ensureZipExists } from '../utils/fs';
 import { createHttpClient, type HttpClient } from '../utils/http-client';
-import { OperaApi } from '../apis/opera-api';
+import * as OperaApi from '../apis/opera-api';
 import { pollUntil } from '../utils/polling';
 import { Blob } from 'node:buffer';
 import fs from 'node:fs';

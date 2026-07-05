@@ -1,4 +1,4 @@
-import { EdgeApiV1_1 } from '../apis/edge-api-v1.1';
+import * as EdgeApiV1_1 from '../apis/edge-api-v1.1';
 import type { Store } from './store';
 import { ensureZipExists } from '../utils/fs';
 import { createHttpClient, type HttpClient } from '../utils/http-client';

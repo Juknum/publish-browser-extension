@@ -11,14 +11,12 @@ if (!docRes.ok) throw Error('Fetch request failed', { cause: docRes });
 const doc = (await docRes.json()) as DiscoveryDoc.Document;
 
 const mod = [
-  `export namespace CwsApiV${version.slice(1).replace('.', '_')} {`,
-  `  export const BASE_URL = '${doc.baseUrl}';`,
+  `export const BASE_URL = '${doc.baseUrl}';`,
   ...Object.entries(doc.schemas)
     // Sort alphabetically for consistent output
     .toSorted(([a], [b]) => a.localeCompare(b))
     .map(([name, schema]) => generateSchemaTypeDefinition(name, schema)),
   generateEndpointTypes(),
-  '}',
 ];
 
 const outputFile = `src/apis/cws-api-${version}.gen.ts`;

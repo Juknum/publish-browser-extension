@@ -1,7 +1,7 @@
 import type { Store } from './store';
 import { ensureZipExists } from '../utils/fs';
 import { createHttpClient, type HttpClient } from '../utils/http-client';
-import { CwsApiV2 } from '../apis/cws-api-v2.gen';
+import * as CwsApiV2 from '../apis/cws-api-v2.gen';
 import { createGcpServiceAccountJwt } from '../utils/google-auth';
 import { createReadStream } from 'node:fs';
 import { ChromeWebStoreUploadStateError } from './chrome-web-store-v1.1';

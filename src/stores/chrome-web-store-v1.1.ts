@@ -1,7 +1,7 @@
 import type { Store } from './store';
 import { ensureZipExists } from '../utils/fs';
 import { createHttpClient, type HttpClient } from '../utils/http-client';
-import { CwsApiV1_1 } from '../apis/cws-api-v1.1.gen';
+import * as CwsApiV1_1 from '../apis/cws-api-v1.1.gen';
 import { FetchError } from '../utils/errors';
 import { createReadStream } from 'node:fs';
 import type { ChromeWebStoreV1_1Options } from '../utils/config-schema';

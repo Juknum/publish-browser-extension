@@ -2,7 +2,7 @@ import { plural } from '../utils/plural';
 import type { Store } from './store';
 import { ensureZipExists } from '../utils/fs';
 import { createHttpClient, type HttpClient } from '../utils/http-client';
-import { FirefoxApiV5 } from '../apis/firefox-api-v5';
+import * as FirefoxApiV5 from '../apis/firefox-api-v5';
 import { createFirefoxJwt } from '../utils/firefox-auth';
 import { pollUntil } from '../utils/polling';
 import type { FirefoxAddonStoreV5Options } from '../config';
