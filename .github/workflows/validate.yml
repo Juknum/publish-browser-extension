@@ -29,28 +29,44 @@ jobs:
       - run: bun test
       - run: bun bin/publish-extension.mjs --help
   e2e-tests:
-    name: E2E Tests
+    name: E2E Tests (${{ matrix.runtime.name }})
     runs-on: ubuntu-24.04
     strategy:
-      max-parallel: 1
+      max-parallel: 1 # Can't run E2E tests at the same time
       matrix:
-        node-version: [22, 24, 26]
-
+        runtime:
+          - name: Node 22
+            version: 22
+            bin: node
+          - name: Node 24
+            version: 24
+            bin: node
+          - name: Node 26
+            version: 26
+            bin: node
+          - name: Bun
+            bin: bun
     # If PR is from a fork, secrets aren't available, so skip this job.
     if: github.event.pull_request.head.repo.fork != true
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - uses: ./.github/actions/setup
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # 6.4.0
+        if: matrix.runtime.bin == 'node'
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: |
-          echo 'Testing with node...'
-          DEV_RUNNER=node bun dev:all
-          echo
-          echo 'Testing with bun...'
-          DEV_RUNNER=bun bun dev:all
+          node-version: ${{ matrix.runtime.version }}
+      - run: bun run build
+      - name: Run E2E test
+        run: |
+          ${{ matrix.runtime.bin }} --version
+          ${{ matrix.runtime.bin }} bin/publish-extension.mjs
         env:
+          DEV_RUNNER: ${{ matrix.runtime.bin }}
+          # ZIPs - comment out to disable store
+          CHROME_ZIP: extension/chrome.zip
+          # FIREFOX_ZIP: extension/firefox.zip
+          EDGE_ZIP: extension/chrome.zip
+          OPERA_ZIP: extension/chrome.zip
           # Chrome
           CHROME_API_VERSION: v2
           CHROME_EXTENSION_ID: ${{ secrets.TEST_CHROME_EXTENSION_ID }}
