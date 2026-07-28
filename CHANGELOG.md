@@ -1,5 +1,34 @@
 # Changelog
 
+## v6.0.0
+
+[compare changes](https://github.com/aklinker1/publish-browser-extension/compare/v5.1.0...v6.0.0)
+
+### 🩹 Fixes
+
+- Drop `consola` for DIY logger and `@topcli/prompts`, handle newlines in env variables correctly ([#84](https://github.com/aklinker1/publish-browser-extension/pull/84))
+- ⚠️ Drop node 20 support, support >=22 ([4ab4d83](https://github.com/aklinker1/publish-browser-extension/commit/4ab4d83))
+
+### 🏡 Chore
+
+- Replace `dotenv` with node built-ins ([#80](https://github.com/aklinker1/publish-browser-extension/pull/80))
+- Drop `formdata-node` and `form-data-encoder` ([#86](https://github.com/aklinker1/publish-browser-extension/pull/86))
+- Remove namespaces from API definitions to reduce bundled types size ([1ada2dd](https://github.com/aklinker1/publish-browser-extension/commit/1ada2dd))
+- Remove deprecated, non-versioned store types and classes ([c2f7ab3](https://github.com/aklinker1/publish-browser-extension/commit/c2f7ab3))
+
+### 🤖 CI
+
+- Run tests against multiple versions of node ([30c8e1c](https://github.com/aklinker1/publish-browser-extension/commit/30c8e1c))
+- Actually install different node versions ([4ced7e2](https://github.com/aklinker1/publish-browser-extension/commit/4ced7e2))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️ Drop node 20 support, support >=22 ([4ab4d83](https://github.com/aklinker1/publish-browser-extension/commit/4ab4d83))
+
+### ❤️ Contributors
+
+- Aaron ([@aklinker1](https://github.com/aklinker1))
+
 ## v5.1.0
 
 [compare changes](https://github.com/aklinker1/publish-browser-extension/compare/v5.0.0...v5.1.0)
