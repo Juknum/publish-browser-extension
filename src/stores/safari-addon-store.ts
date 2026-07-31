@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 export class SafariAddonStore implements Store {
   constructor(
     readonly options: SafariAddonStoreOptions,
-    readonly setStatus: (text: string) => void,
+    readonly setStatus: (text: string) => void = () => {},
   ) {}
 
   async ensureFilesExist(): Promise<void> {
