@@ -94,5 +94,29 @@ describe('SafariAddonStore', () => {
         if (fs.existsSync(dummyKey)) fs.unlinkSync(dummyKey);
       }
     });
+
+    it('asserts xcrun availability when not in dryRun mode', async () => {
+      const tmpDir = os.tmpdir();
+      const dummyBundle = path.join(tmpDir, 'real-bundle.pkg');
+      const dummyKey = path.join(tmpDir, 'real-key.p8');
+      fs.writeFileSync(dummyBundle, 'bundle');
+      fs.writeFileSync(dummyKey, 'key');
+
+      try {
+        const store = new SafariAddonStore({
+          ...mockOptions,
+          bundlePath: dummyBundle,
+          apiPrivateKeyPath: dummyKey,
+        });
+        if (os.platform() !== 'darwin') {
+          await expect(store.submit(false)).rejects.toThrow(
+            /xcrun is not available/,
+          );
+        }
+      } finally {
+        if (fs.existsSync(dummyBundle)) fs.unlinkSync(dummyBundle);
+        if (fs.existsSync(dummyKey)) fs.unlinkSync(dummyKey);
+      }
+    });
   });
 });

@@ -15,13 +15,13 @@ export class SafariAddonStore implements Store {
   }
 
   async submit(dryRun?: boolean): Promise<void> {
-    this.setStatus('Checking xcrun is available');
-    this.assertXcrunAvailable();
-
     if (dryRun) {
       this.setStatus('DRY RUN: Skipped upload and publishing');
       return;
     }
+
+    this.setStatus('Checking xcrun is available');
+    this.assertXcrunAvailable();
 
     this.setStatus('Uploading bundle to App Store Connect');
     this.runAltool([
