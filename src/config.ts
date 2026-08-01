@@ -29,17 +29,17 @@ export function resolveConfig(config?: InlineConfig): PartialResolvedConfig {
   const raw: Record<string, any> = {}
 
   // Init store objects
-  const chromeZip       = (config as any)?.chrome?.zip         ?? process.env.CHROME_ZIP
-  const edgeZip         = (config as any)?.edge?.zip           ?? process.env.EDGE_ZIP
-  const firefoxZip      = (config as any)?.firefox?.zip        ?? process.env.FIREFOX_ZIP
-  const operaZip        = (config as any)?.opera?.zip          ?? process.env.OPERA_ZIP
-  const safariBundlePath = (config as any)?.safari?.bundlePath ?? process.env.SAFARI_BUNDLE_PATH
+  const chromeZip          = (config as any)?.chrome?.zip          ?? process.env.CHROME_ZIP
+  const edgeZip            = (config as any)?.edge?.zip            ?? process.env.EDGE_ZIP
+  const firefoxZip         = (config as any)?.firefox?.zip         ?? process.env.FIREFOX_ZIP
+  const operaZip           = (config as any)?.opera?.zip           ?? process.env.OPERA_ZIP
+  const safariBundlePath   = (config as any)?.safari?.bundlePath   ?? process.env.SAFARI_BUNDLE_PATH
 
-  if (chromeZip)        raw.chrome  ??= {}
-  if (edgeZip)          raw.edge    ??= {}
-  if (firefoxZip)       raw.firefox ??= {}
-  if (operaZip)         raw.opera   ??= {}
-  if (safariBundlePath) raw.safari  ??= {}
+  if (chromeZip)          raw.chrome  ??= {}
+  if (edgeZip)            raw.edge    ??= {}
+  if (firefoxZip)         raw.firefox ??= {}
+  if (operaZip)           raw.opera   ??= {}
+  if (safariBundlePath)   raw.safari  ??= {}
 
   // Set values
   raw.dryRun                           = (config as any)?.dryRun                            ?? process.env.DRY_RUN
